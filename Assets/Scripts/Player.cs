@@ -3,33 +3,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private Collider c;
-    private bool randomBool;
+    public bool canDropItem = false;
+    public Inventory Inventory;
+    public GameObject DropZone;
 
-    [Header("Stats du joueur:")]
-    [Tooltip("Damage du player (PV)")]
-    public int Damage;
-    [Tooltip("% de chance de faire un coup critique (%)")]
-    public int LuckCriticalHit;
-    private void OnTriggerEnter(Collider other)
-    {
-        c = other;
-    }
     void Update()
     {
-        if (c != null)
+        if (canDropItem)
         {
-            if (Input.GetMouseButtonDown(0) && (Vector3.Distance(transform.position, c.transform.position) <= 2.6))
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if (Random.Range(1, 100) <= LuckCriticalHit)
+                if (Inventory.inventory.Count > 0)
                 {
-                    randomBool = true;
+                    GameObject itemToDrop = Inventory.inventory[0];
+                    itemToDrop.SetActive(true);
+                    itemToDrop.transform.position = DropZone.transform.position;
+                    DropZone.GetComponentInParent<PilierController>().isEmpty = false;
+                    Inventory.inventory.RemoveAt(0);
                 }
-                else
-                {
-                    randomBool = false;
-                }
-                c.GetComponent<EmeraldAISystem>().Damage(Damage, null, transform, 100, randomBool);
             }
         }
     }
