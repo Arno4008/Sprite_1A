@@ -7,13 +7,11 @@ public class PilierController : MonoBehaviour
     public GameObject DropZone;
     public bool isEmpty = true;
     public GameObject PressE;
-    public Inventory Inventory;
-    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
-        player.GetComponent<Inventory>();
+
     }
 
     // Update is called once per frame
@@ -24,7 +22,7 @@ public class PilierController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && isEmpty && Inventory.inventory.Count > 0)
+        if (other.gameObject.CompareTag("Player") && isEmpty && other.gameObject.GetComponent<Inventory>().inventory.Count > 0)
         {
             // can press E to drop item
             other.gameObject.GetComponent<Player>().canDropItem = true;
