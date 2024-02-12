@@ -32,14 +32,25 @@ public class Collectible : MonoBehaviour
     {
         isCollected = true;
         gameObject.SetActive(false);
+        PressE.SetActive(false);
         player.GetComponent<Inventory>().AddItem(gameObject);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
 
             PressE.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+
+            PressE.SetActive(false);
         }
     }
 }
